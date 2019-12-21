@@ -80,7 +80,10 @@ public class MainActivity extends AppCompatActivity {
         if(!isEqualClicked){
             Button b= (Button) v;
             String buttonValue = b.getText().toString();
-
+            if(toShow.length() > 0){
+                String lastChar = toShow.substring(toShow.length()-1);
+                if(lastChar.equals("+") || lastChar.equals("-") || lastChar.equals("*") || lastChar.equals("/") || lastChar.equals("."))
+            }
         }
     }
     protected void clear(){
