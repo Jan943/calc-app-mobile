@@ -30,6 +30,17 @@ The comparison between existing traditional calculators and the proposed Calcula
  	<li>The application gives fast and accurate result.</li>
  	<li>This application consumes very small power of your cell phone.</li>
 </ul>
+
+Wyrażenia regularne obsługiwane są przez dwie klasy z biblioteki standardowej. Są to Pattern i Matcher.Korzystałem z danego przykładu:</br>
+```
+Pattern compiledPattern = Pattern.compile("Marcin");
+Matcher matcher = compiledPattern.matcher("Nazywam sie Marcin Pietraszek");
+
+System.out.println(matcher.find());
+System.out.println(matcher.matches());
+```
+
+
 <h3 id="requirement" class="notes">Software Requirement</h3>
 <ul>
  	<li>Android Studio  : version 3.3 latest</li>
@@ -37,4 +48,5 @@ The comparison between existing traditional calculators and the proposed Calcula
  	<li>Internet Connection</li>
  	<li>Java</li>
 </ul>
+
 &nbsp;
