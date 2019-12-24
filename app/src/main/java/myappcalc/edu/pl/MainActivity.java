@@ -10,6 +10,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
     private TextView display;
     private String toShow = "";
+    private String toCalc = "";
     private boolean isDotClicked;
     private boolean isEqualClicked;
     @Override
@@ -47,10 +48,9 @@ public class MainActivity extends AppCompatActivity {
                     isDotClicked = true;
                 }
             }
-             else{
+            else{
                  toShow += buttonValue;
                  if(isDot) isDotClicked = true;
-
             }
         }
         updateDisplay();
@@ -59,10 +59,10 @@ public class MainActivity extends AppCompatActivity {
     public void operatorClick(View v) {
         Button b = (Button) v;
         String buttonValue = b.getText().toString();
-        if (toShow.length() > 0) {
+        if (toShow.length() > 0)   {
             String lastChar = toShow.substring(toShow.length() - 1);
             if (lastChar.equals("+") || lastChar.equals("-") || lastChar.equals("*") || lastChar.equals("/")) {
-                if (lastChar.equals(buttonValue)) {
+                if (!lastChar.equals(buttonValue)) {
                     toShow = toShow.substring(0, toShow.length() - 1);
                     toShow += buttonValue;
                 }
@@ -78,14 +78,58 @@ public class MainActivity extends AppCompatActivity {
 
     public void equalClick(View v){
         if(!isEqualClicked){
-            Button b= (Button) v;
+            Button b = (Button) v;
             String buttonValue = b.getText().toString();
             if(toShow.length() > 0){
                 String lastChar = toShow.substring(toShow.length()-1);
-                if(lastChar.equals("+") || lastChar.equals("-") || lastChar.equals("*") || lastChar.equals("/") || lastChar.equals("."))
+                if (lastChar.equals("+") || lastChar.equals("-") || lastChar.equals("*") || lastChar.equals("/") || lastChar.equals("."))
+                toShow = toShow.substring(0, toShow.length() - 1);
+                toShow += buttonValue;
+
+                toCalc = toShow.substring(0, toShow.length() - 1);
+                boolean isSomethingToCall = true;
+
+                while(isSomethingToCall)
+                    
+
+                updateDisplay();
             }
         }
     }
+
+    private boolean isMultiply(){
+        Pattern p = Pattern.compile("([0-9]*\\.?[0-9]+)\\*([0-9]*\\.?[0-9]+)");
+        Matcher matcher = p.matcher(toCalc);
+        return matcher.find();
+    }
+
+    private boolean isDivide(){
+        Pattern p = Pattern.compile("([0-9]*\\.?[0-9]+)\\/([0-9]*\\.?[0-9]+)");
+        Matcher matcher = p.matcher(toCalc);
+        return matcher.find();
+    }
+
+    private boolean isSum(){
+        Pattern p = Pattern.compile("([0-9]*\\.?[0-9]+)\\+([0-9]*\\.?[0-9]+)");
+        Matcher matcher = p.matcher(toCalc);
+        return matcher.find();
+    }
+
+    private boolean isSubtract(){
+        Pattern p = Pattern.compile("([0-9]*\\.?[0-9]+)\\-([0-9]*\\.?[0-9]+)");
+        Matcher matcher = p.matcher(toCalc);
+        return matcher.find();
+    }
+
+    private void multiplyReplace(){
+        Pattern p = Pattern.compile("([0-9]*\\.?[0-9]+)\\*([0-9]*\\.?[0-9]+)");
+        Matcher matcher = p.matcher(toCalc);
+        matcher.find();
+        BigDecimal numberOne = new BigDecimal(matcher.group(1));
+        BigDecimal numberTwo = new BigDecimal(matcher.group(2));
+        BigDecimal result = numberOne.multiply(numberTwo)
+    }
+
     protected void clear(){
         toShow = "";
         isDotClicked = false;
